@@ -1,0 +1,117 @@
+<html>
+<head>
+
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+  background-image: url("/static/Background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+h1 {
+  color: #ff6600;
+  text-align: center;
+}
+
+.container {
+  background-image: url("/static/Untitled1.png");
+  max-width: 400px;
+  margin: 90px auto;
+  padding: 50px;
+  background-color: rgba(250, 250, 250, 0.329);
+  border-radius: 20px;
+  box-shadow: 0 0 90px rgba(0, 0, 0, 0.34);
+}
+
+.dataframe-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dataframe {
+  flex-basis: calc(50% - 10px);
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+}
+
+.dataframe-title {
+  color: #ff6600;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.dataframe table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dataframe th,
+.dataframe td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: #ff6600;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+    .pagination a:hover {
+    background-color: #ff6600;
+    transition: box-shadow 0.1s ease;
+    box-shadow: 0 0 5px rgb(255, 60, 0);
+    }
+      </style>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Summary Page</h1>
+    <div class="container">
+        <table id="summary-table" class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+
+                </tr>
+            </thead>
+            <div class="summary">
+                <p>Number of groups in Range 1: {{ df_score_threshold_1_groups }}</p>
+                <p>Number of groups in Range 2: {{ df_score_threshold_2_groups }}</p>
+                <p>Number of groups in Range 3: {{ df_score_threshold_3_groups }}</p>
+                <p>Number of groups in Range 4: {{ df_score_threshold_4_groups }}</p>
+                <p>Number of unique reports: {{ unique_count }}</p>
+                <p>Number of unique reports in Range 3 and Range 4: {{ unique_reports_in_range3_and_4  }}</p>
+                <p>{{ unique_reports_in_range3_and_4 }} reports could be reduced to {{ unique_groups_in_range3_and_4 }}</p>
+                <p>Remaining reports: {{ remaining_reports  }}</p>
+                
+              </div>
+            
+            </div>
+        </table>
+    </div>
+</body>
+</html>

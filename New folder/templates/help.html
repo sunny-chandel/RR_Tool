@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Help</title>
+    <link rel="icon" href="\static\My project.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #ff6600;
+            text-align: center;
+        }
+
+        ol {
+            padding-left: 30px;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .btn-primary {
+            background-color: #ff6600;
+            border-color: #ff6600;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #e65c00;
+            border-color: #e65c00;
+        }
+    </style>
+    <script>
+        function showSampleData() {
+            var inputTable = document.getElementById("input-table");
+            var outputTable = document.getElementById("output-table");
+
+            inputTable.innerHTML = "<tr><th>Report Name</th><th>Objects Used</th></tr>" +
+                "<tr><td>Report 1</td><td>Table A.Column1</td></tr>" +
+                "<tr><td>Report 1</td><td>Table B.Column1</td></tr>" +
+                "<tr><td>Report 1</td><td>Table A.Column1</td></tr>" +
+                "<tr><td>Report 1</td><td>KPI Y A.Column1</td></tr>" +
+                "<tr><td>Report 1</td><td>KPI X</td></tr>" +
+                "<tr><td>Report 2</td><td>Table B, Column Y, KPI Z</td></tr>" +
+                "<tr><td>Report 3</td><td>Table C, Column Z, Dimension W</td></tr>";
+
+            outputTable.innerHTML = "<tr><th>Group</th><th>Reports</th></tr>" +
+                "<tr><td>Group 1</td><td>Report 1, Report 2, Report 3</td></tr>" +
+                "<tr><td>Group 2</td><td>Report 4, Report 5</td></tr>";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>T-discover Tool Help</h1>
+
+        <h2>Using the T-discover Tool</h2>
+        <p>
+            The T-discover tool helps you analyze and group reports based on their similarity. Follow the steps below to use the tool effectively:
+        </p>
+        <ol>
+            <li>Prepare the Input: Create a CSV file with two columns - "Report Name" and "Objects Used". The "Objects Used" column should list the tables, columns, KPIs, and dimensions used in each report.</li>
+            <li>Upload the CSV File: Open the T-discover tool and upload the CSV file using the provided file input.</li>
+            <li>Define Similarity Buckets: On the homepage, set the ranges or buckets for similarity scores. For example, you can choose a bucket size of 70-100% similarity.</li>
+            <li>Generate Results: Click on the "Generate" button to analyze the reports and calculate the similarity scores.</li>
+            <li>View Grouped Reports: The tool will sort the reports into different buckets based on their similarity scores. In each bucket, the tool will create groups of reports that are similar to each other. You can view the grouped reports in the output table.</li>
+        </ol>
+
+        <h2>Sample Input</h2>
+        <table id="input-table"></table>
+
+        <h2>Sample Output</h2>
+        <table id="output-table"></table>
+
+        <button class="btn btn-primary" onclick="showSampleData()">Show Sample Data</button>
+    </div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

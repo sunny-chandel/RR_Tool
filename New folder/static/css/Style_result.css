@@ -1,0 +1,115 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("/static/Background.png");
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+h1 {
+    color: #ff5e00;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff5e00;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.btn:hover {
+    background-color: #e65c00;
+}
+.download-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.download-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff5e00;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.download-btn:hover {
+    background-color: #ff5e00;
+}
+.dataframes-section {
+    margin-bottom: 30px;
+}
+.dataframe-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+.dataframe {
+    background-color: #fff;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 20px;
+    display: none; /* Hide all dataframes by default */
+}
+h2.dataframe-title {
+    color: #ff5e00;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table th {
+    background-color: #ff5e00;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+}
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #dddddd;
+}
+.table tr:hover {
+    background-color: #f9f9f9;
+}
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+.pagination a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #ff5e00;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.pagination a:hover {
+    background-color: #ff5e00;
+}
+.active {
+    background-color: #ff5e00;
+}

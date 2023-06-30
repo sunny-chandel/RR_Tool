@@ -1,0 +1,122 @@
+import os
+import csv
+import re
+import time
+
+# Function to extract data from an RDL file using multiple regex patterns
+def extract_data_from_rdl(file_path):
+    try:
+        with open(file_path, 'r', encoding='latin-1') as rdl_file:
+            content = rdl_file.read()
+
+        # Define regex patterns
+        pattern1_names = r'"([^"]+)"\s*,\s*(?:CALCULATE|IF)\s*\([^)]+\)'
+        pattern1_calculations = r'(?:CALCULATE|IF)\s*\([^)]+\)'
+
+        pattern2 = r'"([^"]+)",\s*(\[([^]]+)\]),\s*'
+        pattern3 = r'"(.+)",\sIF\s\((.+)\)'
+
+        # Extract data using pattern 1
+        measure_names_1 = re.findall(pattern1_names, content)
+        pattern1_used = 'Pattern 1'
+
+        output = []
+
+        # If pattern1_names matches, extract pattern1_calculations and save both in the same row
+        if measure_names_1:
+            measure_calculations_1 = re.findall(pattern1_calculations, content)
+            for name, calculation in zip(measure_names_1, measure_calculations_1):
+                measure_name = name.strip(':').strip('"')
+                output.append((file_name, report_name, measure_name, calculation, pattern1_used))
+
+        # Extract data using pattern 2
+        
+        pattern2_matches = re.findall(pattern2, content)
+        pattern2_used = 'Pattern 2'
+
+        # If pattern2 matches, extract name and calculation separately and save them in the output
+        
+        if pattern2_matches:
+            for match in pattern2_matches:
+                measure_name = match[0].strip(':').strip('"')
+                calculation = match[1]
+                output.append((file_name, report_name, measure_name, calculation, pattern2_used))
+
+        # Extract data using pattern 3
+        
+        pattern3_matches = re.findall(pattern3, content)
+        pattern3_used = 'Pattern 3'
+
+        # If pattern3 matches, extract name and calculation separately and save them in the output
+        
+        if pattern3_matches:
+            for match in pattern3_matches:
+                measure_name = match[0].strip(':').strip('"')
+                calculation = match[1]
+                output.append((file_name, report_name, measure_name, calculation, pattern3_used))
+
+        return output
+    except UnicodeDecodeError as e:
+        error_message = f"UnicodeDecodeError: Unable to read file '{file_path}' due to unsupported characters: {str(e)}"
+        print(error_message)
+        return []
+    except Exception as e:
+        error_message = f"Error processing file '{file_path}': {str(e)}"
+        print(error_message)
+        return []
+
+# Function to display progress animation
+def display_progress(current, total):
+    animation = '|/-\\'
+    progress = (current / total) * 100
+    car_position = int((current / total) * 50)
+    car_animation = f'[{animation[current % 4]}] ' + '-' * car_position + '🚗' + '-' * (50 - car_position)
+    print(f'Progress: {current}/{total} files processed ({progress:.1f}%)  {car_animation}', end='\r')
+
+# Folder path containing the RDL files
+folder_path = r"\\mstw-bitirs-x02\SSRS RDL\7IntelRDLs"
+
+# Output file paths for the CSV files
+output_file = r"C:\Users\scha3162\Downloads\3_patterns.csv"
+error_file = r"C:\Users\scha3162\Downloads\error_files.csv"
+
+# Accumulate data from all RDL files
+all_data = []
+error_files = []
+file_count = 0
+rdl_files = [name for name in os.listdir(folder_path) if name.endswith('.rdl')]
+total_files = len(rdl_files)
+
+for filename in rdl_files:
+    if filename.endswith('.rdl'):
+        file_count += 1
+        file_path = os.path.join(folder_path, filename)
+        print(f"Processing file {file_count}/{total_files}: {file_path}")
+        file_name = os.path.splitext(filename)[0]
+        report_name = filename
+
+        # Extract data from RDL file
+        output = extract_data_from_rdl(file_path)
+        if output:
+            all_data.extend(output)
+        else:
+            error_files.append(filename)
+
+        # Display progress animation
+        display_progress(file_count, total_files)
+        time.sleep(0.1)  # Add a slight delay for smoother animation
+
+# Write data to the CSV file
+with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['FileName', 'ReportName', 'Measure Name', 'Calculation', 'Pattern Used'])
+    writer.writerows(all_data)
+
+# Write error file names to the CSV file
+with open(error_file, 'w', newline='', encoding='utf-8') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Error Files'])
+    writer.writerows([[error_file_name] for error_file_name in error_files])
+
+print(f"\nOutput saved to {output_file}.")
+print(f"Error files saved to {error_file}.")

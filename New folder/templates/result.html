@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/Style_result.css">
+    <title>Result</title>
+    <link rel="icon" href="/static/My project.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #ff6600;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #e65c00;
+        }
+        
+        .download-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            background-color: #e65c00;
+        }
+        
+        .dataframes-section {
+            margin-bottom: 30px;
+        }
+        
+        .dataframe-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .dataframe {
+            background-color: #fff;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            padding: 20px;
+            display: none; /* Hide all dataframes by default */
+        }
+        
+        h2.dataframe-title {
+            color: #ff6600;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background-color: #ff6600;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .table td {
+            padding: 10px;
+            border-bottom: 1px solid #dddddd;
+        }
+        
+        .table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .pagination a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px 10px;
+            background-color: #ff6600;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .pagination a:hover {
+            background-color: #e65c00;
+        }
+        
+        .active {
+            background-color: #e65c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Result</h1>
+            <a href="{{ url_for('homepage') }}" class="btn">Home</a>
+        </div>
+
+        <div class="download-section">
+            <h2>Download:</h2>
+            <a href="{{ url_for('download', temp_file_path=temp_file_path) }}" class="download-btn">Download Output Excel</a>
+        
+            <h2>Summary</h2>
+            <a href="{{ url_for('summary',
+                df_score_threshold_1_groups=df_score_threshold_1_groups,
+                df_score_threshold_2_groups=df_score_threshold_2_groups,
+                df_score_threshold_3_groups=df_score_threshold_3_groups,
+                df_score_threshold_4_groups=df_score_threshold_4_groups,
+                unique_count=unique_count,
+                df_score_threshold_3_unquie_report_count=df_score_threshold_3_unquie_report_count,
+                df_score_threshold_4_unquie_report_count=df_score_threshold_4_unquie_report_count) }}" class="download-btn">Summary Page</a>
+        </div>
+        
+        <div class="dataframes-section">
+            <div class="dataframe-container">
+                {% if df_score_0_29.shape[0] > 0 %}
+                    <div id="df_0_29" class="dataframe">
+                        <h2 class="dataframe-title">DataFrame {{ range1_low }}-{{ range1_high }}:</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    {% for column in df_score_0_29.columns %}
+                                        <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in df_score_0_29.itertuples(index=False) %}
+                                    <tr>
+                                        {% for value in row %}
+                                            <td>{{ value }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+               
+                {% if df_score_30_69.shape[0] > 0 %}
+                    <div id="df_30_69" class="dataframe">
+                        <h2 class="dataframe-title">DataFrame {{ range2_low }}-{{ range2_high }}:</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    {% for column in df_score_30_69.columns %}
+                                        <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in df_score_30_69.itertuples(index=False) %}
+                                    <tr>
+                                        {% for value in row %}
+                                            <td>{{ value }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                <!-- Repeat the same structure for other dataframes -->
+                {% if df_score_threshold_1.shape[0] > 0 %}
+                    <div id="df_score_threshold_1" class="dataframe">
+                        <h2 class="dataframe-title">DataFrame {{ range3_low }}-{{ range3_high }}:</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    {% for column in df_score_threshold_1.columns %}
+                                        <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in df_score_threshold_1.itertuples(index=False) %}
+                                    <tr>
+                                        {% for value in row %}
+                                            <td>{{ value }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                <!-- Repeat the same structure for other dataframes -->
+                {% if df_score_threshold_2.shape[0] > 0 %}
+                    <div id="df_score_threshold_2" class="dataframe">
+                        <h2 class="dataframe-title">DataFrame {{ range4_low }}-{{ range4_high }}:</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    {% for column in df_score_threshold_2.columns %}
+                                        <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in df_score_threshold_2.itertuples(index=False) %}
+                                    <tr>
+                                        {% for value in row %}
+                                            <td>{{ value }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                <!-- Repeat the same structure for other dataframes -->
+                {% if reports_not_in_top2_buckets.shape[0] > 0 %}
+                    <div id="reports_not_in_top2_buckets" class="dataframe">
+                        <h2 class="dataframe-title">DataFrame not in 70 - 100:</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    {% for column in reports_not_in_top2_buckets.columns %}
+                                        <th>{{ column }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in reports_not_in_top2_buckets.itertuples(index=False) %}
+                                    <tr>
+                                        {% for value in row %}
+                                            <td>{{ value }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="pagination">
+            {% if df_score_0_29.shape[0] > 0 %}
+                <a href="#" onclick="showDataFrame('df_0_29')">Bucket 1</a>
+            {% endif %}
+            <!-- Repeat the same structure for other dataframes -->
+            {% if df_score_30_69.shape[0] > 0 %}
+                <a href="#" onclick="showDataFrame('df_30_69')">Bucket 2</a>
+            {% endif %}
+            <!-- Repeat the same structure for other dataframes -->
+            {% if df_score_threshold_1.shape[0] > 0 %}
+                <a href="#" onclick="showDataFrame('df_score_threshold_1')">Bucket 3</a>
+            {% endif %}
+            <!-- Repeat the same structure for other dataframes -->
+            {% if df_score_threshold_2.shape[0] > 0 %}
+                <a href="#" onclick="showDataFrame('df_score_threshold_2')">Bucket 4</a>
+            {% endif %}
+            <!-- Repeat the same structure for other dataframes -->
+            {% if reports_not_in_top2_buckets.shape[0] > 0 %}
+                <a href="#" onclick="showDataFrame('reports_not_in_top2_buckets')">Reports Not in Bucket 3&4</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function showDataFrame(dataframeId) {
+            var dataframes = document.getElementsByClassName("dataframe");
+            for (var i = 0; i < dataframes.length; i++) {
+                dataframes[i].style.display = "none";
+            }
+            document.getElementById(dataframeId).style.display = "block";
+        }
+    </script>
+</body>
+</html>

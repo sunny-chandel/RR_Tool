@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    
+    <title>T-Discover Tool</title>
+    <link rel="icon" href="/static\My project.png">
+    
+    
+    <script>
+        document.addEventListener("mousemove", function(event) {
+            const glitter = document.createElement("div");
+            glitter.classList.add("glitter");
+            glitter.style.top = event.pageY + "px";
+            glitter.style.left = event.pageX + "px";
+            document.body.appendChild(glitter);
+
+            setTimeout(function() {
+                glitter.style.transform = "scale(2)";
+                glitter.style.opacity = "0";
+            }, 100);
+
+            setTimeout(function() {
+                glitter.remove();
+            }, 600);
+        });
+    </script>
+</head>
+
+<body>
+    <div class="button-container">
+        <a href="{{ url_for('homepage') }}" class="btn-home">Home</a>
+        <a href="{{ url_for('help') }}" class="btn-help">Help</a>
+    </div>
+    <div class="container">
+        <h1>RDL File</h1>
+        <form action="/rdl" method="POST" enctype="multipart/form-data" id="folderForm">
+            <div class="form-group">
+                <label for="folder">Folder:</label>
+                <input type="file" id="folder" name="folder" webkitdirectory directory multiple>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('folderForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
+    
+            var folderInput = document.getElementById('folder');
+            var files = folderInput.files;
+            if (files.length === 0) {
+                alert('Please select a folder.');
+                return;
+            }
+    
+            // Create a new FormData object
+            var formData = new FormData();
+    
+            // Append each file from the selected folder to the FormData object
+            for (var i = 0; i < files.length; i++) {
+                formData.append('files[]', files[i], files[i].name);
+            }
+    
+            // Make a POST request to the /rdl endpoint with the FormData
+            fetch('/rdl', {
+                method: 'POST',
+                body: formData
+            }).then(function (response) {
+                if (response.ok) {
+                    // Handle successful response
+                    alert('RDL files processed successfully!');
+                } else {
+                    // Handle error response
+                    alert('Error processing RDL files.');
+                }
+            }).catch(function (error) {
+                // Handle network error
+                alert('An error occurred: ' + error.message);
+            });
+        });
+    </script>
+    
+</body>
+</html>

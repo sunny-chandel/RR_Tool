@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    
+    <title>T-Discover Tool</title>
+    <link rel="icon" href="/static\My project.png">
+    
+    
+    <script>
+        document.addEventListener("mousemove", function(event) {
+            const glitter = document.createElement("div");
+            glitter.classList.add("glitter");
+            glitter.style.top = event.pageY + "px";
+            glitter.style.left = event.pageX + "px";
+            document.body.appendChild(glitter);
+
+            setTimeout(function() {
+                glitter.style.transform = "scale(2)";
+                glitter.style.opacity = "0";
+            }, 100);
+
+            setTimeout(function() {
+                glitter.remove();
+            }, 600);
+        });
+    </script>
+</head>
+
+<body>
+    <div class="button-container">
+        <a href="{{ url_for('homepage') }}" class="btn-home">Home</a>
+        <a href="{{ url_for('help') }}" class="btn-help">Help</a>
+      </div>
+    </div>
+
+    
+    <div class="container">
+        <h1>T-Discover</h1>
+        <div class="content">
+            <p>T-Discover is a tool that helps to determine the similarity between reports based on the Key Performance Indicators (KPIs) and dimensions used in those reports.</p>
+            <p>Simply upload your CSV file and specify the threshold values below. T-Discover will do the rest.</p>
+        </div>
+        <form action="/process" method="POST" enctype="multipart/form-data">
+            <div class="form-group_1">
+                <label for="csv_file">Select a CSV File (Column Names Should be: Report Name, Dimensions Used/KPI/Metric Used)</label>
+                <input type="file" name="csv_file" id="csv_file">
+            </div>
+            <div class="form-group">
+                <div class="range-input">
+                    <label for="range1_low">Range 1 (Low):</label>
+                    <input type="number" name="range1_low" id="range1_low" step="0.01" min="0" max="100" value="0" required>
+                    <label for="range1_high">Range 1 (High):</label>
+                    <input type="number" name="range1_high" id="range1_high" step="0.01" min="0" max="100" value="29.99" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="range-input">
+                    <label for="range2_low">Range 2 (Low):</label>
+                    <input type="number" name="range2_low" id="range2_low" step="0.01" min="0" max="100" value="30" required>
+                    <label for="range2_high">Range 2 (High):</label>
+                    <input type="number" name="range2_high" id="range2_high" step="0.01" min="0" max="100" value="69.99" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="range-input">
+                    <label for="range3_low">Range 3 (Low):</label>
+                    <input type="number" name="range3_low" id="range3_low" step="0.01" min="0" max="100" value="70" required>
+                    <label for="range3_high">Range 3 (High):</label>
+                    <input type="number" name="range3_high" id="range3_high" step="0.01" min="0" max="100" value="84.99" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="range-input">
+                    <label for="range4_low">Range 4 (Low):</label>
+                    <input type="number" name="range4_low" id="range4_low" step="0.01" min="0" max="" value="85" required>
+                    <label for="range4_high">Range 4 (High):</label>
+                    <input type="number" name="range4_high" id="range4_high" step="0.01" min="0" max="100" value="100" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
